@@ -13,11 +13,13 @@ public class Rental
     
     public int Id { get; set; }
     
-    DateTime RentalDate { get; set; }
+    public DateTime RentalDate { get; set; }
     
-    DateTime RentalTime { get; set; }
+    public DateTime RentalTime { get; set; }
     
-    DateTime? ReturnDate { get; set; }
+    public DateTime? ReturnDate { get; set; }
+    
+    public decimal Penalty { get; set; }
 
 
     public Rental(User who, Equipment what, int days)
