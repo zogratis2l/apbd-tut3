@@ -49,16 +49,19 @@ public class RentalService
         if (user == null || equipment == null)
         {
             Console.WriteLine("No user or equipment found");
+            return;
         }
 
         if (!equipment.IsAvailable)
         {
             Console.WriteLine("Not available");
+            return;
         }
 
         if (user.RentalRemains <= 0)
         {
             Console.WriteLine("User reached the limit of rentals");
+            return;
         }
         
         rentals.Add(new Rental(user, equipment, days));
@@ -71,22 +74,23 @@ public class RentalService
 
     public void ReturnEquipment(int equipmentId)
     {
-        Rental rental = rentals.Find(r => r.equipment.Id == equipmentId && r.ReturnDate != null);
+        Rental rental = rentals.Find(r => r.equipment.Id == equipmentId && r.ReturnDate == null);
 
         if (rental == null)
         {
             Console.WriteLine("No rental found");
+            return;
         }
         
         rental.ReturnDate = DateTime.Now;
         rental.equipment.IsAvailable = true;
         rental.user.RentalRemains++;
 
-        if (rental.ReturnDate > rental.RentalTime)
+        if (rental.isOverdue())
         {
             int dayLate = (rental.ReturnDate.Value - rental.RentalTime).Days;
             rental.Penalty = dayLate * LateFeePerDay;
-            Console.WriteLine("Late" + "Your penalty is " + rental.Penalty);
+            Console.WriteLine("Late " + "Your penalty is " + rental.Penalty);
         }
         else
         {
@@ -102,6 +106,7 @@ public class RentalService
         if (equipment == null)
         {
             Console.WriteLine("No equipment found");
+            return;
         }
         
         equipment.IsAvailable = false;
@@ -132,6 +137,12 @@ public class RentalService
         }
     }
 
+    public List<Rental> GetUserRentalsForTest(int userId)
+    {
+        return rentals.Where(r => r.user.Id == userId).ToList();
+    }
+    
+    
     public void Summary()
     {
         Console.WriteLine("Users: " +  users.Count);
