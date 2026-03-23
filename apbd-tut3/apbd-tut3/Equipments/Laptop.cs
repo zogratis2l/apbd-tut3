@@ -7,7 +7,7 @@ public class Laptop : Equipment
 
 
     public Laptop(string name, bool isAvailable, string manufacturer, string model, string gpu, string cpu) :
-        base(name, isAvailable, manufacturer, model)
+        base(name, manufacturer, model)
     {
         GPU = gpu;
         CPU = cpu;

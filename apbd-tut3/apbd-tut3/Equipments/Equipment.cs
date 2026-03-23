@@ -10,11 +10,11 @@ public abstract class Equipment
     public string Manufacturer { get; set; }
     public string Model { get; set; }
 
-    public Equipment(string name,bool isAvailable, string manufacturer, string model)
+    public Equipment(string name, string manufacturer, string model)
     {
         Id = nextId++;
         Name =  name;
-        IsAvailable = isAvailable;
+        IsAvailable = true;
         Manufacturer = manufacturer;
         Model = model;
     }
